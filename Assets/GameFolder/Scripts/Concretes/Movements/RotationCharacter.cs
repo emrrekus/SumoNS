@@ -23,7 +23,7 @@ namespace SumoNS.Movements
                 if (touch.phase == TouchPhase.Moved)
                 {
                        
-                    rotationY=Quaternion.Euler(0f,-touch.deltaPosition.x*rotateSpeedModifier,0f);
+                    rotationY=Quaternion.Euler(0f,touch.deltaPosition.x*rotateSpeedModifier,0f);
                     _characterRigibody.transform.rotation = rotationY * _characterRigibody.transform.rotation;
                 }
             }
