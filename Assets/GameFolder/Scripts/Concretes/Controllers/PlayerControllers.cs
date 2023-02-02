@@ -2,40 +2,39 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using SumoNS.Abstracts.Movements;
+using SumoNS.Movements;
 using UnityEngine;
 
 namespace SumoNS.Controllers
 {
     public class PlayerControllers : MonoBehaviour
     {
-            private Touch _touch;
-            private Vector2 touchPosition;
-            private Quaternion rotationY;
-            public float speed = 3;
-            private float rotateSpeedModifier = 0.5f;
-            private IMover _mover;
+        [Header("Movement Informations")] [SerializeField]
+        float speed = 3;
+
+        private Touch _touch;
+        private Vector2 touchPosition;
+        private Quaternion rotationY;
+        private float rotateSpeedModifier = 0.5f;
+
+        private IMover _mover;
+        private IRotation _rotation;
 
 
-            private void Awake()
-            {
-                
-            }
+        private void Awake()
+        {
+            _mover = new MoveCharacter(this);
+            _rotation = new RotationCharacter(this);
+        }
 
-            void Update()
-            {
-                transform.position += -transform.forward * speed * Time.deltaTime;
-        
-                if (Input.touchCount > 0)
-                {
-                    _touch = Input.GetTouch(0);
-                    if (_touch.phase == TouchPhase.Moved)
-                    {
-                       
-                            rotationY=Quaternion.Euler(0f,-_touch.deltaPosition.x*rotateSpeedModifier,0f);
-                            transform.rotation = rotationY * transform.rotation;
-                    }
-                }
-            }
+        void Update()
+        {
+        }
 
+        private void FixedUpdate()
+        {
+            _mover.MoveAction(speed);
+            _rotation.MoveRotation(_touch, touchPosition, rotationY, rotateSpeedModifier);
+        }
     }
 }
