@@ -19,12 +19,15 @@ namespace SumoNS.Controllers
         private float rotateSpeedModifier = 0.3f;
         
         private CharacterAnimation _animation;
+       
 
         private IMover _mover;
         private IRotation _rotation;
 
         private bool IsRun;
         private float moveSpeed = 1;
+
+        
 
         private void Awake()
         {
@@ -34,10 +37,7 @@ namespace SumoNS.Controllers
             _animation = new CharacterAnimation(this);
         }
 
-        void Update()
-        {
-            
-        }
+       
 
         private void FixedUpdate()
         {
@@ -49,5 +49,7 @@ namespace SumoNS.Controllers
         {
             _animation.MoveAnimations(IsRun,1);
         }
+
+       
     }
 }
