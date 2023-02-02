@@ -10,7 +10,7 @@ namespace SumoNS.Controllers
 {
     public class SpawnerController : MonoBehaviour
     {
-        [SerializeField] private float spawnInterval = 0.5f;
+        [SerializeField] private float spawnInterval = 0.1f;
         [SerializeField] CollectableManager _objectPooling;
         [SerializeField] private Vector3 spawnPos;
 

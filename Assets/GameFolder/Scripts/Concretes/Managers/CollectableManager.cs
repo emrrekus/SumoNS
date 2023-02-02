@@ -37,7 +37,8 @@ namespace SumoNS.Managers
             for (int i = 0; i < poolSize; i++)
             {
                 GameObject obj = Instantiate(objectPrefab,SpawnPoint(),Quaternion.identity);
-                obj.SetActive(true);
+                obj.transform.rotation = Quaternion.Euler(0, 0, 90);
+;                obj.SetActive(true);
                 _pooledObject.Enqueue(obj);
             }
         }

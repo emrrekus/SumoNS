@@ -12,7 +12,7 @@ namespace SumoNS.Controllers
     public class PlayerControllers : MonoBehaviour
     {
         [Header("Movement Informations")] [SerializeField]
-        float speed = 3;
+        float speed = 5;
 
         private Touch _touch;
         private Vector2 touchPosition;
@@ -20,6 +20,8 @@ namespace SumoNS.Controllers
         private float rotateSpeedModifier = 0.3f;
 
         private CharacterAnimation _animation;
+
+        private Rigidbody _playerRb;
 
 
         private IMover _mover;
@@ -31,10 +33,16 @@ namespace SumoNS.Controllers
 
         private void Awake()
         {
+            _playerRb = GetComponent<Rigidbody>();
             IsRun = true;
             _mover = new MoveCharacter(this);
             _rotation = new RotationCharacter(this);
             _animation = new CharacterAnimation(this);
+        }
+
+        private void Update()
+        {
+            
         }
 
 
@@ -57,5 +65,7 @@ namespace SumoNS.Controllers
                 CollectableManager.Instance.IsSpawn(true);
             }
         }
+
+      
     }
 }
