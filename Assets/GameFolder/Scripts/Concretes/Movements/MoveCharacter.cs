@@ -9,24 +9,24 @@ namespace SumoNS.Movements
     public class MoveCharacter : IMover
     {
         private Rigidbody _characterRigibody;
-
        
-
         public MoveCharacter(PlayerControllers playerController)
         {
             _characterRigibody = playerController.GetComponent<Rigidbody>();
         }
 
-        public void MoveAction(float speed)
+        public void MoveAction(float speed,Vector3 direction)
         {
-            Vector3 direction = _characterRigibody.transform.forward;
-             _characterRigibody.transform.position += _characterRigibody.transform.forward * speed * Time.deltaTime;
-
-            // _characterRigibody.AddForce(direction*speed*Time.deltaTime,ForceMode.Impulse);
-            //  _characterRigibody.AddRelativeForce(direction*speed,ForceMode.Force);
-
+            if (_characterRigibody.velocity.magnitude < 4)
+            {
+                _characterRigibody.AddForce(direction*speed,ForceMode.Force);
+            }
             
-            _characterRigibody.velocity = direction * speed;
+           
+            
+            
+            
+
         }
     }
 }

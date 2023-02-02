@@ -14,6 +14,8 @@ namespace SumoNS.Controllers
         [Header("Movement Informations")] [SerializeField]
         float speed = 5;
 
+       Vector3 direction;
+
         private Touch _touch;
         private Vector2 touchPosition;
         private Quaternion rotationY;
@@ -42,13 +44,12 @@ namespace SumoNS.Controllers
 
         private void Update()
         {
-            
+            direction=_playerRb.transform.forward;
         }
-
 
         private void FixedUpdate()
         {
-            _mover.MoveAction(speed);
+            _mover.MoveAction(speed,direction);
             _rotation.MoveRotation(_touch, touchPosition, rotationY, rotateSpeedModifier);
         }
 
@@ -66,6 +67,6 @@ namespace SumoNS.Controllers
             }
         }
 
-      
+       
     }
 }

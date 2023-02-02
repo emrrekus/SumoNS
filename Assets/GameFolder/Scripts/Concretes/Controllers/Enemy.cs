@@ -19,8 +19,17 @@ namespace SumoNS
 
         private void Update()
         {
-            enemyRb.AddForce((player.transform.position-transform.position).normalized*speed);
+            enemyRb.AddForce((player.transform.position - transform.position).normalized * speed);
         }
-       
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            Rigidbody otherRb = collision.gameObject.GetComponent<Rigidbody>();
+            if (otherRb != null)
+            {
+                otherRb.drag = 0f;
+                
+            }
+        }
     }
 }
