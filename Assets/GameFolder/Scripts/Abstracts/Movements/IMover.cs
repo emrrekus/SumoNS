@@ -6,7 +6,7 @@ namespace SumoNS.Abstracts.Movements
 {
     public interface IMover
     {
-        void MoveAction(float speed,Vector3 direction);
+        void MoveAction(float speed,Vector3 direction,float maxSpeed);
 
     }
 }

@@ -13,8 +13,8 @@ namespace SumoNS.Controllers
     {
         [Header("Movement Informations")] [SerializeField]
         float speed = 5;
-
-       Vector3 direction;
+         Vector3 direction;
+        float maxSpeed = 2;
 
         private Touch _touch;
         private Vector2 touchPosition;
@@ -49,7 +49,7 @@ namespace SumoNS.Controllers
 
         private void FixedUpdate()
         {
-            _mover.MoveAction(speed,direction);
+            _mover.MoveAction(speed,direction,maxSpeed);
             _rotation.MoveRotation(_touch, touchPosition, rotationY, rotateSpeedModifier);
         }
 
