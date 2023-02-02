@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using SumoNS.Abstracts.Movements;
 using SumoNS.Animations;
+using SumoNS.Managers;
 using SumoNS.Movements;
 using UnityEngine;
 
@@ -17,9 +18,9 @@ namespace SumoNS.Controllers
         private Vector2 touchPosition;
         private Quaternion rotationY;
         private float rotateSpeedModifier = 0.3f;
-        
+
         private CharacterAnimation _animation;
-       
+
 
         private IMover _mover;
         private IRotation _rotation;
@@ -27,7 +28,6 @@ namespace SumoNS.Controllers
         private bool IsRun;
         private float moveSpeed = 1;
 
-        
 
         private void Awake()
         {
@@ -37,7 +37,6 @@ namespace SumoNS.Controllers
             _animation = new CharacterAnimation(this);
         }
 
-       
 
         private void FixedUpdate()
         {
@@ -47,9 +46,16 @@ namespace SumoNS.Controllers
 
         private void LateUpdate()
         {
-            _animation.MoveAnimations(IsRun,1);
+            _animation.MoveAnimations(IsRun, 1);
         }
 
-       
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("Collectable"))
+            {
+                other.gameObject.SetActive(false);
+                CollectableManager.Instance.IsSpawn(true);
+            }
+        }
     }
 }

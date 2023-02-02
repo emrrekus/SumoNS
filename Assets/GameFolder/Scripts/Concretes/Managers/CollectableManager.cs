@@ -11,19 +11,23 @@ namespace SumoNS.Managers
     public class CollectableManager : SingletonMBObject<CollectableManager>
     {
         private Queue<GameObject> _pooledObject;
-        [SerializeField] private GameObject _gameObject;
+        [SerializeField] private GameObject objectPrefab;
         [SerializeField] private int poolSize;
         private Vector3 spawnPos;
+        private bool _IsSpawn;
+
+        public bool Spawn => _IsSpawn;
 
 
         private void Awake()
         {
+           
             SingletonThisObject(this);
         }
 
         private void Start()
         {
-            InitalizePool();
+         InitalizePool();
         }
 
         private void InitalizePool()
@@ -32,7 +36,7 @@ namespace SumoNS.Managers
 
             for (int i = 0; i < poolSize; i++)
             {
-                GameObject obj = Instantiate(_gameObject, SpawnPoint(), Quaternion.identity);
+                GameObject obj = Instantiate(objectPrefab,SpawnPoint(),Quaternion.identity);
                 obj.SetActive(true);
                 _pooledObject.Enqueue(obj);
             }
@@ -40,17 +44,34 @@ namespace SumoNS.Managers
 
         public GameObject GetPoolObject()
         {
-            GameObject obj = _pooledObject.Dequeue();
-            obj.SetActive(true);
-            _pooledObject.Enqueue(obj);
-
-            return obj;
+            if (_IsSpawn)
+            {
+                GameObject obj = _pooledObject.Dequeue();
+                obj.SetActive(true);
+                _pooledObject.Enqueue(obj);
+                _IsSpawn = false;
+                return obj;
+                
+            }
+            else
+            {
+                return null;
+            }
+           
         }
 
-        private Vector3 SpawnPoint()
+        public Vector3 SpawnPoint()
         {
+            
             spawnPos = new Vector3(Random.Range(-7, 15), 1, Random.Range(23, 0));
             return spawnPos;
         }
+
+        public void IsSpawn(bool spawn)
+        {
+            _IsSpawn = spawn;
+        }
+
+       
     }
 }
