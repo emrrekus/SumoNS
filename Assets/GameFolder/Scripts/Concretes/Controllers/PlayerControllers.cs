@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using SumoNS.Abstracts.Controllers;
 using SumoNS.Abstracts.Movements;
+using SumoNS.Abstracts.Points;
 using SumoNS.Animations;
 using SumoNS.Managers;
 using SumoNS.Movements;
@@ -29,15 +30,16 @@ namespace SumoNS.Controllers
 
         private Rigidbody _playerRb;
 
-
+        private IPoint _point;
         private IMover _mover;
         private IRotation _rotation;
 
-        
+        private int _scor;
         private bool IsGrounded;
         
         private void Awake()
         {
+            _point = GetComponent<IPoint>();
             _playerRb = GetComponent<Rigidbody>();
             _mover = new MoveCharacter(this);
             _rotation = new RotationCharacter(this);
@@ -51,6 +53,7 @@ namespace SumoNS.Controllers
 
         private void FixedUpdate()
         {
+            
             ConstraintsControl();
             _mover.MoveAction(speed, direction, maxSpeed);
             _rotation.MoveRotation(_touch, touchPosition, rotationY, rotateSpeedModifier);
@@ -67,6 +70,9 @@ namespace SumoNS.Controllers
             {
                 other.gameObject.SetActive(false);
                 CollectableManager.Instance.IsSpawn(true);
+                _point.TakePoint(100);
+                
+                
             }
         }
         private void OnCollisionEnter(Collision collision)

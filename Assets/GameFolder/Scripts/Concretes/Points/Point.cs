@@ -12,6 +12,10 @@ namespace SumoNS.Points
         [SerializeField] private PointSO _pointInfo;
 
         private int _currentPoint;
+
+        public int CurrentPoint => _currentPoint;
+
+        public event System.Action<int> OnTakePoint; 
         private void Awake()
         {
             _currentPoint = _pointInfo.CurrentPoint;
@@ -19,7 +23,9 @@ namespace SumoNS.Points
 
         public void TakePoint(int point)
         {
-            point += _currentPoint;
+            _currentPoint += point;
+            Debug.Log(_currentPoint);
+            OnTakePoint?.Invoke(_currentPoint);
         }
     }
 }

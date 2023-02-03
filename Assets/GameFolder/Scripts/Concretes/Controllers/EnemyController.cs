@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using SumoNS.Abstracts.Controllers;
 using SumoNS.Abstracts.Movements;
+using SumoNS.Abstracts.Points;
 using SumoNS.Animations;
 using SumoNS.Managers;
 using SumoNS.Movements;
@@ -14,6 +15,7 @@ namespace SumoNS.Controllers
     {
         [SerializeField] Transform _playerPrefab;
 
+        private IPoint _point;
         private IMover _mover;
         private EnemyAnimation _animation;
         public float pushForce = 0.5f;
@@ -26,8 +28,8 @@ namespace SumoNS.Controllers
 
         private void Awake()
         {
-            
-            
+
+            _point = GetComponent<IPoint>();
             _animation = new EnemyAnimation(this);
             _mover = new MoveWithNavMesh(this);
         }
@@ -52,7 +54,10 @@ namespace SumoNS.Controllers
             {
                 other.gameObject.SetActive(false);
                 CollectableManager.Instance.IsSpawn(true);
+                _point.TakePoint(100);
+                
             }
+            
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -66,8 +71,10 @@ namespace SumoNS.Controllers
 
                 otherBody.AddForce(pushDirection * pushForce, ForceMode.Impulse);
             }
-            
+
            
+
+
         }
       
     }
