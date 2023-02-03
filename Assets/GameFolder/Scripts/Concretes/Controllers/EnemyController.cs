@@ -8,6 +8,7 @@ using SumoNS.Animations;
 using SumoNS.Managers;
 using SumoNS.Movements;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace SumoNS.Controllers
 {
@@ -21,14 +22,21 @@ namespace SumoNS.Controllers
         public float pushForce = 10f;
 
         
-       
-        private LayerMask platformLayer;
+         NavMeshAgent _navMeshAgent;
+         Rigidbody _enemyRb;
         
         
+        public float characterRadius = 0.5f;
+        public LayerMask platformLayer;
+
+        private bool isGrounded;
+        private bool isWalk;
 
         private void Awake()
         {
-            FindClosestEnemy();
+            
+            _enemyRb = GetComponent<Rigidbody>();
+            _navMeshAgent = GetComponent<NavMeshAgent>();
             _point = GetComponent<IPoint>();
             _animation = new EnemyAnimation(this);
             _mover = new MoveWithNavMesh(this);
@@ -39,6 +47,57 @@ namespace SumoNS.Controllers
           
         }
 
+        
+       
+
+        private void FixedUpdate()
+        {
+            IsGroundedControl();
+            ConstraintsCheck();
+            FindClosestEnemy();
+            if(!isWalk)_mover.MoveAction(10f, Target.transform.position, 10f);
+            
+           
+            
+        }
+
+        private void LateUpdate()
+        {
+            _animation.MoveAnimations(1f);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("Collectable"))
+            {
+                other.gameObject.SetActive(false);
+                CollectableManager.Instance.IsSpawn(true);
+                _point.TakePoint(100);
+                
+            }
+
+            if (other.gameObject.CompareTag("Close"))
+            {
+                Debug.Log("Değdi");
+                isWalk = false;
+                _navMeshAgent.enabled = false;
+            }
+            
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            Rigidbody otherBody = collision.collider.attachedRigidbody;
+
+            if (otherBody != null)
+            {
+                Vector3 pushDirection = collision.contacts[0].point - transform.position;
+                pushDirection = pushDirection.normalized;
+
+                otherBody.AddForce(pushDirection * pushForce, ForceMode.Impulse);
+            }
+
+        }
         void FindClosestEnemy()
         {
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -65,45 +124,18 @@ namespace SumoNS.Controllers
                 Target = closestEnemy.transform;
             }
         }
-       
-
-        private void FixedUpdate()
+        private void IsGroundedControl()
         {
-            FindClosestEnemy();
-            _mover.MoveAction(10f, Target.transform.position, 10f);
-           
-            
+            isGrounded = Physics.CheckSphere(transform.position, characterRadius, platformLayer);
         }
 
-        private void LateUpdate()
+        private void ConstraintsCheck()
         {
-            _animation.MoveAnimations(1f);
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("Collectable"))
+            if (!isGrounded)
             {
-                other.gameObject.SetActive(false);
-                CollectableManager.Instance.IsSpawn(true);
-                _point.TakePoint(100);
-                
+                _enemyRb.constraints = RigidbodyConstraints.None;
+                Destroy(gameObject);
             }
-            
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            Rigidbody otherBody = collision.collider.attachedRigidbody;
-
-            if (otherBody != null)
-            {
-                Vector3 pushDirection = collision.contacts[0].point - transform.position;
-                pushDirection = pushDirection.normalized;
-
-                otherBody.AddForce(pushDirection * pushForce, ForceMode.Impulse);
-            }
-
         }
 
         /*private void OnDestroy()

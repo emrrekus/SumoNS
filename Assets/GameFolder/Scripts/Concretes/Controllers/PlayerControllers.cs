@@ -11,10 +11,11 @@ using UnityEngine;
 
 namespace SumoNS.Controllers
 {
-    public class PlayerControllers : MonoBehaviour
+    public class PlayerControllers : MonoBehaviour,IEntityController
     {
         [Header("Movement Informations")] [SerializeField]
         float speed = 5;
+
         Vector3 direction;
         float maxSpeed = 2;
 
@@ -35,12 +36,15 @@ namespace SumoNS.Controllers
         private IRotation _rotation;
 
         private int _scor;
-        private bool IsGrounded;
-        private float distance = 1.0f;
-        
+
+        public float characterRadius = 0.5f;
+        public LayerMask platformLayer;
+
+        private bool isGrounded;
+
         private void Awake()
         {
-            IsGrounded = true;
+            isGrounded = true;
             _point = GetComponent<IPoint>();
             _playerRb = GetComponent<Rigidbody>();
             _mover = new MoveCharacter(this);
@@ -48,7 +52,6 @@ namespace SumoNS.Controllers
             _animation = new CharacterAnimation(this);
         }
 
-     
 
         private void Update()
         {
@@ -57,8 +60,9 @@ namespace SumoNS.Controllers
 
         private void FixedUpdate()
         {
-            
-            ConstraintsControl();
+            IsGroundedControl();
+            ConstraintsCheck();
+            Debug.Log(isGrounded);
             _mover.MoveAction(speed, direction, maxSpeed);
             _rotation.MoveRotation(_touch, touchPosition, rotationY, rotateSpeedModifier);
         }
@@ -75,10 +79,9 @@ namespace SumoNS.Controllers
                 other.gameObject.SetActive(false);
                 CollectableManager.Instance.IsSpawn(true);
                 _point.TakePoint(100);
-                
-                
             }
         }
+
         private void OnCollisionEnter(Collision collision)
         {
             Rigidbody otherBody = collision.collider.attachedRigidbody;
@@ -90,43 +93,28 @@ namespace SumoNS.Controllers
 
                 otherBody.AddForce(pushDirection * pushForce, ForceMode.Impulse);
             }
-            if (collision.gameObject.layer == LayerMask.NameToLayer("Platform"))
-            {
-                IsGrounded = true;
-            }
-            
         }
 
         private void OnCollisionExit(Collision collision)
         {
-            if (collision.gameObject.layer == LayerMask.NameToLayer("Platform"))
+            if (collision.gameObject.CompareTag("Platform"))
             {
-                IsGrounded = false;
+                isGrounded = true;
+            }
+            else
+            {
+                isGrounded = false;
             }
         }
 
-        private void IsGroundOkey()
+        private void IsGroundedControl()
         {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, Vector3.down, out hit, distance))
-            {
-                if (hit.collider.gameObject.tag != "Platform")
-                {
-                    IsGrounded = false;
-                }
-                
-            }
-            
+            isGrounded = Physics.CheckSphere(transform.position, characterRadius, platformLayer);
         }
-        private void ConstraintsControl()
-        {
-            if (!IsGrounded)
-            {
-                _playerRb.constraints = RigidbodyConstraints.None;
 
-            }
-            
+        private void ConstraintsCheck()
+        {
+            if (!isGrounded) _playerRb.constraints = RigidbodyConstraints.None;
         }
-        
     }
 }

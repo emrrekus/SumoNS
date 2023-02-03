@@ -22,6 +22,7 @@ namespace SumoNS.Movements
         public void MoveAction(float speed, Vector3 direction, float maxSpeed)
         {
             _navMeshAgent.SetDestination(direction);
+            
         }
     }
 }
