@@ -19,9 +19,11 @@ namespace SumoNS.Movements
         {
             if (_characterRigibody.velocity.magnitude < maxSpeed)
             {
-                _characterRigibody.AddForce(direction*speed,ForceMode.Force);
+               _characterRigibody.velocity = direction * speed;
+
             }
-            
+
+
         }
     }
 }

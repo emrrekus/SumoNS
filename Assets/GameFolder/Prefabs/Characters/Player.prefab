@@ -125,7 +125,6 @@ GameObject:
   - component: {fileID: 8344334337999758270}
   - component: {fileID: 8344334337999758264}
   - component: {fileID: 8344334337999758265}
-  - component: {fileID: 8344334337999758267}
   - component: {fileID: 8344334337999758266}
   m_Layer: 0
   m_Name: Player
@@ -180,20 +179,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18af6c0e8ec3a204f9f74d590ed83430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
---- !u!135 &8344334337999758267
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8344334337999758258}
-  m_Material: {fileID: 13400000, guid: 21805ba96ee8f8946ba8e221253f39f1, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  speed: 3
+  _turnTransform: {fileID: 7615491324524358076}
+  moveSpeed: 1
 --- !u!136 &8344334337999758266
 CapsuleCollider:
   m_ObjectHideFlags: 0

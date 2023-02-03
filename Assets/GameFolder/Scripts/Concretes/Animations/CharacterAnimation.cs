@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using SumoNS.Abstracts.Controllers;
 using SumoNS.Controllers;
 using UnityEngine;
 
@@ -14,10 +15,10 @@ namespace SumoNS.Animations
             _animator = entity.GetComponentInChildren<Animator>();
         }
 
-        public void MoveAnimations(bool Run,float moveSpeed)
+        public void MoveAnimations(float moveSpeed)
         {
-            _animator.SetBool("IsRun", Run);
-            _animator.SetFloat("moveSpeed",moveSpeed);
+            
+            _animator.SetFloat("moveSpeed", moveSpeed, 0.1f, Time.deltaTime);
         }
     }
 }
