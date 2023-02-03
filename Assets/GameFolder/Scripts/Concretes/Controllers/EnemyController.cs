@@ -16,30 +16,31 @@ namespace SumoNS.Controllers
     {
         [SerializeField] Transform Target;
 
-        private IPoint _point;
-        private IMover _mover;
-        private EnemyAnimation _animation;
+        [Header("Movement Informations")] [SerializeField]
+        float speed = 0;
+
+       
+        
         public float pushForce = 10f;
 
-        
-         NavMeshAgent _navMeshAgent;
-         Rigidbody _enemyRb;
+        private EnemyAnimation _animation;
+        private IPoint _point;
+         Rigidbody enemyRb;
         
         
         public float characterRadius = 0.5f;
         public LayerMask platformLayer;
 
         private bool isGrounded;
-        private bool isWalk;
+        
 
         private void Awake()
         {
             
-            _enemyRb = GetComponent<Rigidbody>();
-            _navMeshAgent = GetComponent<NavMeshAgent>();
-            _point = GetComponent<IPoint>();
+            enemyRb = GetComponent<Rigidbody>();
+           _point = GetComponent<IPoint>();
             _animation = new EnemyAnimation(this);
-            _mover = new MoveWithNavMesh(this);
+            
         }
 
         private void Start()
@@ -55,10 +56,12 @@ namespace SumoNS.Controllers
             IsGroundedControl();
             ConstraintsCheck();
             FindClosestEnemy();
-            if(!isWalk)_mover.MoveAction(10f, Target.transform.position, 10f);
+            MoveTowardsTarget();
+            RotateTowardsTarget();
+            
+          
             
            
-            
         }
 
         private void LateUpdate()
@@ -79,8 +82,8 @@ namespace SumoNS.Controllers
             if (other.gameObject.CompareTag("Close"))
             {
                 Debug.Log("Değdi");
-                isWalk = false;
-                _navMeshAgent.enabled = false;
+
+
             }
             
         }
@@ -98,6 +101,25 @@ namespace SumoNS.Controllers
             }
 
         }
+       
+        void MoveTowardsTarget()
+        {
+            Vector3 direction = (Target.position - transform.position).normalized;
+            enemyRb.AddForce(direction * speed);
+            
+        }
+        void RotateTowardsTarget()
+        {
+            if (Target == null)
+            {
+                return;
+            }
+
+            Vector3 direction = (Target.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10.0f);
+        }
+        
         void FindClosestEnemy()
         {
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -133,14 +155,10 @@ namespace SumoNS.Controllers
         {
             if (!isGrounded)
             {
-                _enemyRb.constraints = RigidbodyConstraints.None;
-                Destroy(gameObject);
+                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                
             }
         }
-
-        /*private void OnDestroy()
-        {
-            EnemyManager.Instance.RemoveEnemyController(this);
-        }*/
+        
     }
 }
