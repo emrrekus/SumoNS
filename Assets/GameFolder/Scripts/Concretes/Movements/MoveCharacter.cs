@@ -23,7 +23,6 @@ namespace SumoNS.Movements
 
             }
 
-
         }
     }
 }

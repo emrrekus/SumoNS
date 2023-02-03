@@ -10,12 +10,12 @@ namespace SumoNS.Controllers
 {
     public class SpawnerController : MonoBehaviour
     {
-        [SerializeField] private float spawnInterval = 0.1f;
+       
         [SerializeField] CollectableManager _objectPooling;
         [SerializeField] private Vector3 spawnPos;
 
         private bool IsSpawn;
-        private float _spawnInterval;
+       
 
         private Rigidbody _characterRigibody;
 
@@ -32,7 +32,7 @@ namespace SumoNS.Controllers
             var obj = _objectPooling.GetPoolObject();
             if(obj==null)return;
             obj.transform.position = CollectableManager.Instance.SpawnPoint();
-            _spawnInterval = 0;
+            
             
         }
     }

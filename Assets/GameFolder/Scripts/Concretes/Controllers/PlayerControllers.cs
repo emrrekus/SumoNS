@@ -33,14 +33,12 @@ namespace SumoNS.Controllers
         private IMover _mover;
         private IRotation _rotation;
 
-        private bool IsRun;
-        public float moveSpeed = 1;
-
-
+        
+        private bool IsGrounded;
+        
         private void Awake()
         {
             _playerRb = GetComponent<Rigidbody>();
-            IsRun = true;
             _mover = new MoveCharacter(this);
             _rotation = new RotationCharacter(this);
             _animation = new CharacterAnimation(this);
@@ -53,6 +51,7 @@ namespace SumoNS.Controllers
 
         private void FixedUpdate()
         {
+            ConstraintsControl();
             _mover.MoveAction(speed, direction, maxSpeed);
             _rotation.MoveRotation(_touch, touchPosition, rotationY, rotateSpeedModifier);
         }
@@ -74,20 +73,38 @@ namespace SumoNS.Controllers
         {
             Rigidbody otherBody = collision.collider.attachedRigidbody;
 
-            if (otherBody == null)
+            if (otherBody != null)
             {
-                return;
-            }
+                Vector3 pushDirection = collision.contacts[0].point - transform.position;
+                pushDirection = pushDirection.normalized;
 
-            Vector3 pushDirection = collision.contacts[0].point - transform.position;
-            pushDirection = pushDirection.normalized;
-            
-            otherBody.AddForce(pushDirection * pushForce, ForceMode.Impulse);
+                otherBody.AddForce(pushDirection * pushForce, ForceMode.Impulse);
+            }
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Platform"))
+            {
+                IsGrounded = true;
+            }
             
         }
-      
 
+        private void OnCollisionExit(Collision collision)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Platform"))
+            {
+                IsGrounded = false;
+            }
+        }
 
-       
+        private void ConstraintsControl()
+        {
+            if (IsGrounded)
+            {
+                _playerRb.constraints = RigidbodyConstraints.FreezePositionY;
+            }
+            else
+            {
+                _playerRb.constraints = RigidbodyConstraints.None;
+            }
+        }
     }
 }
