@@ -22,7 +22,6 @@ namespace SumoNS.Movements
                _characterRigibody.velocity = direction * speed;
 
             }
-
         }
     }
 }

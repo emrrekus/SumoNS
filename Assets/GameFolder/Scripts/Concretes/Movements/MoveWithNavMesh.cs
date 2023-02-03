@@ -10,6 +10,7 @@ namespace SumoNS.Movements
 {
     public class MoveWithNavMesh : IMover
     {
+        
         private NavMeshAgent _navMeshAgent;
        
 

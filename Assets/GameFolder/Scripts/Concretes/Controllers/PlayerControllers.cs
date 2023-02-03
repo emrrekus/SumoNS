@@ -36,15 +36,19 @@ namespace SumoNS.Controllers
 
         private int _scor;
         private bool IsGrounded;
+        private float distance = 1.0f;
         
         private void Awake()
         {
+            IsGrounded = true;
             _point = GetComponent<IPoint>();
             _playerRb = GetComponent<Rigidbody>();
             _mover = new MoveCharacter(this);
             _rotation = new RotationCharacter(this);
             _animation = new CharacterAnimation(this);
         }
+
+     
 
         private void Update()
         {
@@ -101,16 +105,28 @@ namespace SumoNS.Controllers
             }
         }
 
+        private void IsGroundOkey()
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, distance))
+            {
+                if (hit.collider.gameObject.tag != "Platform")
+                {
+                    IsGrounded = false;
+                }
+                
+            }
+            
+        }
         private void ConstraintsControl()
         {
-            if (IsGrounded)
-            {
-                _playerRb.constraints = RigidbodyConstraints.FreezePositionY;
-            }
-            else
+            if (!IsGrounded)
             {
                 _playerRb.constraints = RigidbodyConstraints.None;
+
             }
+            
         }
+        
     }
 }

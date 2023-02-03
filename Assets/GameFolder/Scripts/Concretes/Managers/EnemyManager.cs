@@ -9,7 +9,10 @@ namespace SumoNS.Managers
 {
     public class EnemyManager : SingletonMBObject<EnemyManager>
     {
+        
         [SerializeField] private List<EnemyController> _enemies;
+
+        public List<Transform> Targets { get; private set; }
 
         public List<EnemyController> Enemies => _enemies;
 
@@ -17,6 +20,7 @@ namespace SumoNS.Managers
         {
             SingletonThisObject(this);
             _enemies = new List<EnemyController>();
+            Targets = new List<Transform>();
         }
 
         public void AddEnemyController(EnemyController enemyController)

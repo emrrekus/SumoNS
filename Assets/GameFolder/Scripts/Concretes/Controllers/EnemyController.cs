@@ -13,12 +13,12 @@ namespace SumoNS.Controllers
 {
     public class EnemyController : MonoBehaviour, IEntityController
     {
-        [SerializeField] Transform _playerPrefab;
+        [SerializeField] Transform Target;
 
         private IPoint _point;
         private IMover _mover;
         private EnemyAnimation _animation;
-        public float pushForce = 0.5f;
+        public float pushForce = 10f;
 
         
        
@@ -28,18 +28,50 @@ namespace SumoNS.Controllers
 
         private void Awake()
         {
-
+            FindClosestEnemy();
             _point = GetComponent<IPoint>();
             _animation = new EnemyAnimation(this);
             _mover = new MoveWithNavMesh(this);
         }
 
+        private void Start()
+        {
+          
+        }
+
+        void FindClosestEnemy()
+        {
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            float closestDistance = Mathf.Infinity;
+            GameObject closestEnemy = null;
+            Vector3 currentPosition = transform.position;
+            foreach (GameObject enemy in enemies)
+            {
+                if (enemy == gameObject)
+                {
+                    continue;
+                }
+                Vector3 directionToEnemy = enemy.transform.position - currentPosition;
+                float distanceToEnemy = directionToEnemy.magnitude;
+                if (distanceToEnemy < closestDistance)
+                {
+                    closestDistance = distanceToEnemy;
+                    closestEnemy = enemy;
+                }
+            }
+
+            if (closestEnemy != null)
+            {
+                Target = closestEnemy.transform;
+            }
+        }
        
 
         private void FixedUpdate()
         {
+            FindClosestEnemy();
+            _mover.MoveAction(10f, Target.transform.position, 10f);
            
-            _mover.MoveAction(10f, _playerPrefab.transform.position, 10f);
             
         }
 
@@ -72,10 +104,11 @@ namespace SumoNS.Controllers
                 otherBody.AddForce(pushDirection * pushForce, ForceMode.Impulse);
             }
 
-           
-
-
         }
-      
+
+        /*private void OnDestroy()
+        {
+            EnemyManager.Instance.RemoveEnemyController(this);
+        }*/
     }
 }
