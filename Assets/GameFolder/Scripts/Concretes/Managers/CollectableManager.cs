@@ -64,7 +64,7 @@ namespace SumoNS.Managers
         public Vector3 SpawnPoint()
         {
             
-            spawnPos = new Vector3(Random.Range(-7, 15), 1, Random.Range(23, 0));
+            spawnPos = new Vector3(Random.Range(-4, 15), 2.5f, Random.Range(19, 1));
             return spawnPos;
         }
 
