@@ -18,6 +18,8 @@ namespace SumoNS.Uis
             _timeCounterText = GetComponent<TMP_Text>();    
         }
 
+        //Countdown timer in minutes and seconds on UI screen
+
         void Update() {
             timeLeft -= Time.deltaTime;
             
@@ -26,6 +28,7 @@ namespace SumoNS.Uis
 
             _timeCounterText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
+            //If the countdown timer is 0, the time out screen is displayed.
 
             if (timeLeft < 0) {
                 GameManager.Instance.TimeOut();

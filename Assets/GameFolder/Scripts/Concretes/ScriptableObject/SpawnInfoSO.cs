@@ -8,6 +8,7 @@ namespace SumoNS.ScriptableObjects
     [CreateAssetMenu(fileName = "Spawner Info",menuName = "Spawner Information/Create New",order = 51)]
     public class SpawnInfoSO : ScriptableObject
     {
+        //We hold the enemies that will spawn
         [SerializeField] private EnemyController _enemyPrefab;
 
 

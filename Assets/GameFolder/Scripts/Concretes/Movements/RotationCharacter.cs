@@ -14,7 +14,7 @@ namespace SumoNS.Movements
         {
             _characterRigibody = playerController.GetComponent<Rigidbody>();
         }
-        
+        //We provide rotation control of the character with swipe.
         public void MoveRotation(Touch touch, Vector2 touchPosition, Quaternion rotationY,float rotateSpeedModifier)
         {
             if (Input.touchCount > 0)

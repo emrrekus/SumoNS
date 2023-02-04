@@ -183,10 +183,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 514205073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70aca828bf8085d49a179d60628315a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 8024eb3d1a45c22469e9dce144fa2783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemy: {fileID: 3100661594834861805}
+  _gameObject: {fileID: 3100661594834861805}
 --- !u!1 &3100661594834861805
 GameObject:
   m_ObjectHideFlags: 0
@@ -542,6 +542,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 853342122966069204, guid: 8f5122a9dd3037e489b1da10afc26979,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 28efd4c07c7629840988bf8a25f98810, type: 2}
     - target: {fileID: 919132149155446097, guid: 8f5122a9dd3037e489b1da10afc26979,
         type: 3}
       propertyPath: m_Name

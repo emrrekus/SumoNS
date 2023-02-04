@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using SumoNS.Controllers;
 using TMPro;
 using UnityEngine;
 
@@ -9,19 +7,14 @@ namespace SumoNS.Uis
 {
     public class EnemyAddName : MonoBehaviour
     {
-        public GameObject _enemy;
+        [SerializeField] private GameObject _gameObject;
+        
         private TMP_Text nameText;
 
-        private void Awake()
+        void Start()
         {
-           
             nameText = GetComponent<TMP_Text>();
-            
-        }
-
-        private void Update()
-        {
-            nameText.text = _enemy.name;
+            nameText.text = _gameObject.name;
         }
     }
 }

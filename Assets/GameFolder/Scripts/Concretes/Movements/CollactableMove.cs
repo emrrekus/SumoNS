@@ -10,6 +10,8 @@ namespace SumoNS.Movements
     {
         private float rotationSpeed = 60f;
 
+        //We rotate the object in random rotation.
+
         void Start()
         {
             Vector3 randomDirection = Random.onUnitSphere;
