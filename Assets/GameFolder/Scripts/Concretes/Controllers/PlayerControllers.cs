@@ -79,10 +79,12 @@ namespace SumoNS.Controllers
             //Animation control of the character
             _animation.MoveAnimations(1);
         }
-
+        
+        //Here, if the character has contacted the collectable, we update the character's score,physics,scor text and check the colletable spawn process.
+        // If the player leaves the platform, he is dead, by checking this, we return the lose UI screen
         private void OnTriggerEnter(Collider other)
         {
-            //Here, if the character has contacted the collectable, we update the character's score,physics,scor text and check the colletable spawn process.
+            
 
             if (other.gameObject.CompareTag("Collectable"))
             {
@@ -95,7 +97,7 @@ namespace SumoNS.Controllers
                 pushForce += 0.05f;
             }
 
-            // If the player leaves the platform, he is dead, by checking this, we return the lose UI screen
+           
 
             if (other.gameObject.CompareTag("Ground"))
             {
@@ -105,10 +107,10 @@ namespace SumoNS.Controllers
             }
         }
 
-
+        //We control the collision of the player and the enemy collider, if there is a collision, we push the enemy with the force as much as the push force.
         private void OnCollisionEnter(Collision collision)
         {
-            //We control the collision of the player and the enemy collider, if there is a collision, we push the enemy with the force as much as the push force.
+            
 
             Rigidbody otherBody = collision.collider.attachedRigidbody;
 
@@ -129,30 +131,32 @@ namespace SumoNS.Controllers
 
         private void GroundedAndConstraintControl()
         {
-            //If the player is dead, we are doing ground control and following the camera to false
-            if (!isGrounded) _playerCamera.enabled = false;
-
-            //We are checking if the character is on the platform
+            DeactivateCamera();
             IsGroundedControl();
-            // If the character is not on the platform, we open the cutter of the y position
             ConstraintsCheck();
         }
-
+        //We are checking if the character is on the platform
         private void IsGroundedControl()
         {
             isGrounded = Physics.CheckSphere(transform.position, characterRadius, platformLayer);
         }
-
+        // If the character is not on the platform, we open the cutter of the y position
         private void ConstraintsCheck()
         {
             if (!isGrounded) _playerRb.constraints = RigidbodyConstraints.None;
         }
-
+        // After the character colletable touches, we false the text that appears on the character
         private void DeactivateText()
         {
-            // After the character colletable touches, we false the text that appears on the character
+           
 
             _pointText.gameObject.SetActive(false);
+        }
+
+        //If the player is dead, we are doing ground control and following the camera to false
+        private void DeactivateCamera()
+        {
+            if (!isGrounded) _playerCamera.enabled = false;
         }
     }
 }
