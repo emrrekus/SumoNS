@@ -71,6 +71,7 @@ namespace SumoNS.Controllers
 
         private void FixedUpdate()
         {
+           
             IsGroundedControl();
             ConstraintsCheck();
 

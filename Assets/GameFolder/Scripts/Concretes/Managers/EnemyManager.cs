@@ -16,7 +16,7 @@ namespace SumoNS.Managers
 
         public List<EnemyController> Enemies => _enemies;
 
-        public int _enemyCount => _enemies.Count;
+        public int _enemyCount => _enemies.Count+1;
         
       
 

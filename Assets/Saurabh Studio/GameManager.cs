@@ -17,7 +17,7 @@ public class GameManager : SingletonMBObject<GameManager>
         SingletonThisObject(this);
         _SceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
-   
+
 
     public void Win()
     {
@@ -41,6 +41,7 @@ public class GameManager : SingletonMBObject<GameManager>
     {
         _panels[Index].SetActive(true);
     }
+
     private void PanelClose(int Index)
     {
         _panels[Index].SetActive(false);
@@ -74,5 +75,4 @@ public class GameManager : SingletonMBObject<GameManager>
                 break;
         }
     }
-
 }

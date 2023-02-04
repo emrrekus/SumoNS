@@ -12,7 +12,7 @@ namespace SumoNS.Uis
     {
         private TMP_Text _PlayerCountText;
 
-        private int count;
+       
 
 
         private void Awake()
@@ -20,14 +20,11 @@ namespace SumoNS.Uis
             _PlayerCountText = GetComponent<TMP_Text>();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             _PlayerCountText.text = EnemyManager.Instance._enemyCount.ToString();
-
-            count = EnemyManager.Instance._enemyCount;
             
-            Debug.Log("Enemy Count"+count);
-
+            if(EnemyManager.Instance._enemyCount<2)GameManager.Instance.Win();
 
         }
     }
