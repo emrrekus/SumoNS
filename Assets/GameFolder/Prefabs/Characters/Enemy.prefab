@@ -46,10 +46,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.40539742
+  m_Radius: 0.3419649
   m_Height: 1.9665663
   m_Direction: 1
-  m_Center: {x: 0, y: 0.89428174, z: 0.01338768}
+  m_Center: {x: -6.3894876e-11, y: 0.89428174, z: -0.050044864}
 --- !u!54 &3100661594834861811
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -58,8 +58,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3100661594834861805}
   serializedVersion: 2
-  m_Mass: 0.8
-  m_Drag: 0
+  m_Mass: 0.7
+  m_Drag: 0.7
   m_AngularDrag: 10
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -79,8 +79,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
-  speed: 5
-  pushForce: 5
+  speed: 7
+  pushForce: 10
   characterRadius: 0.5
   platformLayer:
     serializedVersion: 2

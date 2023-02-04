@@ -11,7 +11,7 @@ namespace SumoNS.Controllers
     {
         [SerializeField] private SpawnInfoSO _spawnInfo;
 
-
+        
         private void Awake()
         {
             Spawn();
@@ -21,6 +21,7 @@ namespace SumoNS.Controllers
         {
            EnemyController enemyController= Instantiate(_spawnInfo.EnemyPrefab, transform.position, Quaternion.identity);
            EnemyManager.Instance.AddEnemyController(enemyController);
+           
         }
     }
 }

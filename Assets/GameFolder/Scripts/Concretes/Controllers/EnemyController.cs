@@ -19,49 +19,42 @@ namespace SumoNS.Controllers
         [Header("Movement Informations")] [SerializeField]
         float speed = 0;
 
-       
-        
+
         public float pushForce = 10f;
 
         private EnemyAnimation _animation;
         private IPoint _point;
-         Rigidbody enemyRb;
-        
-        
+        Rigidbody enemyRb;
+
+
         public float characterRadius = 0.5f;
         public LayerMask platformLayer;
 
         private bool isGrounded;
-        
+
 
         private void Awake()
         {
-            
             enemyRb = GetComponent<Rigidbody>();
-           _point = GetComponent<IPoint>();
+            _point = GetComponent<IPoint>();
             _animation = new EnemyAnimation(this);
-            
         }
 
-        private void Start()
-        {
-          
-        }
-
-        
        
+
 
         private void FixedUpdate()
         {
+            Debug.Log("EnemyCount:"+EnemyManager.Instance._enemyCount);
             IsGroundedControl();
             ConstraintsCheck();
-            FindClosestEnemy();
-            MoveTowardsTarget();
-            RotateTowardsTarget();
-            
-          
-            
-           
+
+            if (isGrounded)
+            {
+                FindClosestEnemy();
+                MoveTowardsTarget();
+                RotateTowardsTarget();
+            }
         }
 
         private void LateUpdate()
@@ -76,17 +69,13 @@ namespace SumoNS.Controllers
                 other.gameObject.SetActive(false);
                 CollectableManager.Instance.IsSpawn(true);
                 _point.TakePoint(100);
-                
+                transform.localScale += new Vector3(0.03f, 0.03f, 0.03f);
+
+                speed += 0.01f;
+                pushForce += 0.09f;
             }
-
-            if (other.gameObject.CompareTag("Close"))
-            {
-                Debug.Log("Değdi");
-
-
-            }
-            
         }
+
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -99,15 +88,15 @@ namespace SumoNS.Controllers
 
                 otherBody.AddForce(pushDirection * pushForce, ForceMode.Impulse);
             }
-
         }
-       
+
         void MoveTowardsTarget()
         {
             Vector3 direction = (Target.position - transform.position).normalized;
-            enemyRb.AddForce(direction * speed);
-            
+
+            if (enemyRb.velocity.magnitude < 6) enemyRb.AddForce(direction * speed);
         }
+
         void RotateTowardsTarget()
         {
             if (Target == null)
@@ -117,12 +106,12 @@ namespace SumoNS.Controllers
 
             Vector3 direction = (Target.position - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10.0f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
         }
-        
+
         void FindClosestEnemy()
         {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Collectable");
             float closestDistance = Mathf.Infinity;
             GameObject closestEnemy = null;
             Vector3 currentPosition = transform.position;
@@ -132,6 +121,7 @@ namespace SumoNS.Controllers
                 {
                     continue;
                 }
+
                 Vector3 directionToEnemy = enemy.transform.position - currentPosition;
                 float distanceToEnemy = directionToEnemy.magnitude;
                 if (distanceToEnemy < closestDistance)
@@ -146,6 +136,7 @@ namespace SumoNS.Controllers
                 Target = closestEnemy.transform;
             }
         }
+
         private void IsGroundedControl()
         {
             isGrounded = Physics.CheckSphere(transform.position, characterRadius, platformLayer);
@@ -155,10 +146,14 @@ namespace SumoNS.Controllers
         {
             if (!isGrounded)
             {
-                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-                
+                enemyRb.constraints = RigidbodyConstraints.None;
+                Destroy(gameObject, 2);
             }
         }
-        
+
+        private void OnDestroy()
+        {
+            EnemyManager.Instance.RemoveEnemyController(this);
+        }
     }
 }

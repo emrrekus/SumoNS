@@ -17,6 +17,7 @@ namespace SumoNS.Uis
         private void Awake()
         {
             _PointText = GetComponent<TMP_Text>();
+            
         }
 
         private void OnEnable()

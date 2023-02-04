@@ -16,8 +16,7 @@ namespace SumoNS.Controllers
         [Header("Movement Informations")] [SerializeField]
         float speed = 5;
 
-        Vector3 direction;
-        float maxSpeed = 2;
+        
 
         [Header("Bounce Informations")] [SerializeField]
         public float pushForce = 0.5f;
@@ -26,6 +25,8 @@ namespace SumoNS.Controllers
         private Vector2 touchPosition;
         private Quaternion rotationY;
         private float rotateSpeedModifier = 0.3f;
+        Vector3 direction;
+        float maxSpeed = 2;
 
         private CharacterAnimation _animation;
 
@@ -79,6 +80,9 @@ namespace SumoNS.Controllers
                 other.gameObject.SetActive(false);
                 CollectableManager.Instance.IsSpawn(true);
                 _point.TakePoint(100);
+                transform.localScale += new Vector3(0.03f, 0.03f, 0.03f);
+                _playerRb.mass += 0.1f;
+                
             }
         }
 

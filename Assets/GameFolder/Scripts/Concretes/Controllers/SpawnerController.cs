@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using SumoNS.Abstracts.Spawn;
 using SumoNS.Managers;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -22,7 +21,7 @@ namespace SumoNS.Controllers
 
         private void Start()
         {
-            InvokeRepeating("SpawnInvoke",1,1);
+            InvokeRepeating("SpawnInvoke",0f,0.01f);
         }
 
      
@@ -32,6 +31,7 @@ namespace SumoNS.Controllers
             var obj = _objectPooling.GetPoolObject();
             if(obj==null)return;
             obj.transform.position = CollectableManager.Instance.SpawnPoint();
+            
             
             
         }
