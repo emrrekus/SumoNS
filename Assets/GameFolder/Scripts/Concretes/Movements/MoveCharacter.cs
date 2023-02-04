@@ -15,6 +15,7 @@ namespace SumoNS.Movements
             _characterRigibody = playerController.GetComponent<Rigidbody>();
         }
 
+        //We control the momentum of the character with the max speed and move it in the direction of y rotation
         public void MoveAction(float speed,Vector3 direction,float maxSpeed)
         {
             if (_characterRigibody.velocity.magnitude < maxSpeed)

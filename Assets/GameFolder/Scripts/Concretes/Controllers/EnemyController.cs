@@ -19,16 +19,16 @@ namespace SumoNS.Controllers
         [Header("Movement Informations")] [SerializeField]
         float speed = 0;
 
-
-        public float pushForce = 10f;
+        //The propulsion of the enemy we use at the time of the collision
+        [SerializeField] float pushForce = 10f;
 
         private EnemyAnimation _animation;
         private IPoint _point;
         Rigidbody enemyRb;
 
-
-        public float characterRadius = 0.5f;
-        public LayerMask platformLayer;
+        //To check if the enemy is on the ground
+        [SerializeField] float characterRadius = 0.5f;
+        [SerializeField] LayerMask platformLayer;
 
         private bool isGrounded;
         private bool isDead;
@@ -46,15 +46,12 @@ namespace SumoNS.Controllers
 
         private void FixedUpdate()
         {
-            
-            IsGroundedControl();
-            ConstraintsCheck();
-
+            //We check whether the character is on the ground and turn on the milling machine of the y position according to the situation.
+            GroundedAndConstraintControl();
             if (isGrounded)
             {
-                FindClosestEnemy();
-                MoveTowardsTarget();
-                RotateTowardsTarget();
+                // We find the closest object to the Enemy and turn towards it and make it move forward.
+                TowardsClosestControl();
             }
         }
 
@@ -63,6 +60,7 @@ namespace SumoNS.Controllers
             _animation.MoveAnimations(1f);
         }
 
+        //Here, if the enemy has contacted the collectable, we update the enemy's score,physics,scor text and check the colletable spawn process.
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.CompareTag("Collectable"))
@@ -82,7 +80,7 @@ namespace SumoNS.Controllers
             }
         }
 
-
+        //We control the collision of the enemy and the player collider, if there is a collision, we push the enemy with the force as much as the push force.
         private void OnCollisionEnter(Collision collision)
         {
             Rigidbody otherBody = collision.collider.attachedRigidbody;
@@ -96,13 +94,27 @@ namespace SumoNS.Controllers
             }
         }
 
+        // We find the closest object to the Enemy and turn towards it and make it move forward.
+        void TowardsClosestControl()
+        {
+            MoveTowardsTarget();
+            RotateTowardsTarget();
+            FindClosestEnemy();
+        }
+        
+        //We find the direction the enemy will move
         void MoveTowardsTarget()
         {
+            if (Target == null)
+            {
+                return;
+            }
             Vector3 direction = (Target.position - transform.position).normalized;
 
             if (enemyRb.velocity.magnitude < 6) enemyRb.AddForce(direction * speed);
         }
 
+        //We find the rotation the enemy will move
         void RotateTowardsTarget()
         {
             if (Target == null)
@@ -115,6 +127,7 @@ namespace SumoNS.Controllers
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
         }
 
+        // Enemy to find the closest object
         void FindClosestEnemy()
         {
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Collectable");
@@ -143,11 +156,19 @@ namespace SumoNS.Controllers
             }
         }
 
+        //We check whether the character is on the ground and turn on the milling machine of the y position according to the situation.
+
+        private void GroundedAndConstraintControl()
+        {
+            IsGroundedControl();
+            ConstraintsCheck();
+        }
+        //We are checking if the enemy is on the platform
         private void IsGroundedControl()
         {
             isGrounded = Physics.CheckSphere(transform.position, characterRadius, platformLayer);
         }
-
+        // If the character is not on the platform, we open the cutter of the y position
         private void ConstraintsCheck()
         {
             if (!isGrounded)
@@ -157,7 +178,7 @@ namespace SumoNS.Controllers
             }
         }
 
-        private void OnDestroy()
+       private void OnDestroy()
         {
             EnemyManager.Instance.RemoveEnemyController(this);
         }

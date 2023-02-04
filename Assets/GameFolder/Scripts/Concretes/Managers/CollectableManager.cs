@@ -29,6 +29,7 @@ namespace SumoNS.Managers
          InitalizePool();
         }
 
+        //Object Pooling
         private void InitalizePool()
         {
             _pooledObject = new Queue<GameObject>();
@@ -59,6 +60,7 @@ namespace SumoNS.Managers
             }
            
         }
+        //we make the object spawn in random positions
 
         public Vector3 SpawnPoint()
         {
@@ -66,7 +68,7 @@ namespace SumoNS.Managers
             spawnPos = new Vector3(Random.Range(-3.6f, 15f), 2.5f, Random.Range(19, 0.8f));
             return spawnPos;
         }
-
+        //We check whether the object can spawn or not.
         public void IsSpawn(bool spawn)
         {
             _IsSpawn = spawn;

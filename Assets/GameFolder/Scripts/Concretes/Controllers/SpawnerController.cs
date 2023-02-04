@@ -15,16 +15,12 @@ namespace SumoNS.Controllers
 
         private bool IsSpawn;
        
-
-        private Rigidbody _characterRigibody;
-
-
         private void Start()
         {
             InvokeRepeating("SpawnInvoke",0f,0.01f);
         }
 
-     
+        // We iterate over objects using the object pooling method
         private void SpawnInvoke()
         {
             

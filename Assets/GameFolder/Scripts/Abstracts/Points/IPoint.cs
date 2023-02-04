@@ -6,6 +6,7 @@ namespace SumoNS.Abstracts.Points
 {
     public interface IPoint
     {
+        // We created it to keep numbers for each character dynamically
         void TakePoint(int point);
 
     }

@@ -6,6 +6,7 @@ namespace SumoNS.Abstracts.Controllers
 {
     public interface IEntityController 
     {
+        //Tek controller scripti ile birden fazla controller scripti için işlem yapabiliyoruz
       public Transform transform { get; }
       
        

@@ -72,6 +72,8 @@ namespace SumoNS.Controllers
             GroundedAndConstraintControl();
             //Character's actions
             PlayerMover();
+            // If only the player is left on the stage, win UI comes
+            if(EnemyManager.Instance._enemyCount<2)GameManager.Instance.Win();
         }
 
         private void LateUpdate()

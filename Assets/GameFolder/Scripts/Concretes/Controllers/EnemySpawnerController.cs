@@ -16,9 +16,11 @@ namespace SumoNS.Controllers
         {
             Spawn();
         }
+        // We Instatiate the enemy object that it has taken from Scriptable to the spawn point
 
         private void Spawn()
         {
+            
            EnemyController enemyController= Instantiate(_spawnInfo.EnemyPrefab, transform.position, Quaternion.identity);
           EnemyManager.Instance.AddEnemyController(enemyController);
            

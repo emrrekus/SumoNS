@@ -12,9 +12,6 @@ namespace SumoNS.Uis
     {
         private TMP_Text _PlayerCountText;
 
-       
-
-
         private void Awake()
         {
             _PlayerCountText = GetComponent<TMP_Text>();
@@ -22,10 +19,8 @@ namespace SumoNS.Uis
 
         private void FixedUpdate()
         {
+            // Gets the number of available players in the game from Enemy manager and transfers them to UI text
             _PlayerCountText.text = EnemyManager.Instance._enemyCount.ToString();
-            
-            if(EnemyManager.Instance._enemyCount<2)GameManager.Instance.Win();
-
         }
     }
 }

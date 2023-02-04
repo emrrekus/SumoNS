@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 1157417864}
   - component: {fileID: 1157417863}
   - component: {fileID: 870778138}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -300,7 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c686d6226a6fc894dbf929cf70db86f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeLeft: 70
+  timeLeft: 30
   counter: 0
 --- !u!1 &1598629468
 GameObject:
@@ -1680,7 +1680,7 @@ PrefabInstance:
     - target: {fileID: 7275953457568343276, guid: 991410fea755d2f49bc1ff781efbb5f8,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.2886564
+      value: 0.28865638
       objectReference: {fileID: 0}
     - target: {fileID: 7275953457568343276, guid: 991410fea755d2f49bc1ff781efbb5f8,
         type: 3}
@@ -1712,6 +1712,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 7275953457568343278, guid: 991410fea755d2f49bc1ff781efbb5f8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7275953457568343279, guid: 991410fea755d2f49bc1ff781efbb5f8,
         type: 3}
       propertyPath: m_Follow
@@ -1736,6 +1741,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Lens.NearClipPlane
       value: 0.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 7275953458293623891, guid: 991410fea755d2f49bc1ff781efbb5f8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 991410fea755d2f49bc1ff781efbb5f8, type: 3}

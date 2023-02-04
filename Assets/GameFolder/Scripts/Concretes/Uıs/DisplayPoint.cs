@@ -15,18 +15,15 @@ namespace SumoNS.Uis
     {
         private TMP_Text _PointText;
         private GameObject _player;
-        private int count;
-
+      
         private void Awake()
         {
-           
             _PointText = GetComponent<TMP_Text>();
-            
         }
 
         private void OnEnable()
         {
-        
+            //Enemy and player's current score is reached and transferred to UI Text with event
             Point point = GetComponentInParent<Point>();
             point.OnTakePoint += HandleTakePoint;
         }

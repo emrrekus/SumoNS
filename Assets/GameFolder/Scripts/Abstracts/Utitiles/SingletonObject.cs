@@ -15,6 +15,7 @@ namespace SumoNS.Abstracts.Utitiles
                 Instance = entity;
                 DontDestroyOnLoad(this.gameObject);
             }
+           
             
         }
     }
