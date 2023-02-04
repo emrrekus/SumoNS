@@ -46,8 +46,6 @@ namespace SumoNS.Controllers
 
         private void FixedUpdate()
         {
-            Debug.Log(EnemyManager.Instance._enemyCount);
-
             
             IsGroundedControl();
             ConstraintsCheck();

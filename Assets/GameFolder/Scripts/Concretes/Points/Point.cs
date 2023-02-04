@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SumoNS.Points
 {
-    public class Point : MonoBehaviour,IPoint
+    public class Point : MonoBehaviour, IPoint
     {
         [SerializeField] private PointSO _pointInfo;
 
@@ -15,7 +15,8 @@ namespace SumoNS.Points
 
         public int CurrentPoint => _currentPoint;
 
-        public event System.Action<int> OnTakePoint; 
+        public event System.Action<int> OnTakePoint;
+
         private void Awake()
         {
             _currentPoint = _pointInfo.CurrentPoint;
@@ -24,7 +25,6 @@ namespace SumoNS.Points
         public void TakePoint(int point)
         {
             _currentPoint += point;
-            Debug.Log(_currentPoint);
             OnTakePoint?.Invoke(_currentPoint);
         }
     }

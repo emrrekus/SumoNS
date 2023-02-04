@@ -102,7 +102,7 @@ namespace SumoNS.Controllers
             {
                 isDead = true;
                 
-                GameManager.Instance.Win();
+                GameManager.Instance.Lose();
                 
             }
         }
