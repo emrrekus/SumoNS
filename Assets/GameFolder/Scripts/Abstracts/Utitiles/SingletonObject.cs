@@ -15,10 +15,6 @@ namespace SumoNS.Abstracts.Utitiles
                 Instance = entity;
                 DontDestroyOnLoad(this.gameObject);
             }
-            else
-            {
-                Destroy(this.gameObject);
-            }
             
         }
     }

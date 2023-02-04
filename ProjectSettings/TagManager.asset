@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Platform
   - Close
+  - Ground
   layers:
   - Default
   - TransparentFX

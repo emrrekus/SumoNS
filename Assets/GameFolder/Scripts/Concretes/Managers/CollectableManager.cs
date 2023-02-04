@@ -21,7 +21,6 @@ namespace SumoNS.Managers
 
         private void Awake()
         {
-           
             SingletonThisObject(this);
         }
 

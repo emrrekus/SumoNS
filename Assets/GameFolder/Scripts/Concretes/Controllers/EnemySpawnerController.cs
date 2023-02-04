@@ -20,7 +20,7 @@ namespace SumoNS.Controllers
         private void Spawn()
         {
            EnemyController enemyController= Instantiate(_spawnInfo.EnemyPrefab, transform.position, Quaternion.identity);
-           EnemyManager.Instance.AddEnemyController(enemyController);
+          EnemyManager.Instance.AddEnemyController(enemyController);
            
         }
     }

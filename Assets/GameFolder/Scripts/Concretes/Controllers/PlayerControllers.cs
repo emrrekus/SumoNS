@@ -92,7 +92,7 @@ namespace SumoNS.Controllers
             if (other.gameObject.CompareTag("Ground"))
             {
                 isDead = true;
-                GameManagers.Instance.Lose();
+                GameManager.Instance.Lose();
                 
                
                 

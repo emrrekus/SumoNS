@@ -76,7 +76,10 @@ namespace SumoNS.Controllers
                 pushForce += 0.09f;
             }
 
-          
+            if (other.gameObject.CompareTag("Ground"))
+            {
+                isDead = true;
+            }
         }
 
 
