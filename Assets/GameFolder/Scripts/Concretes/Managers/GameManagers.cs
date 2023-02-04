@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using SumoNS.Abstracts.Utitiles;
+using SumoNS.Controllers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,10 +14,14 @@ namespace SumoNS
         GameObject[] _panels;
 
 
+        
         private int _SceneIndex;
+        
 
         private void Awake()
         {
+           
+            SingletonThisObject(this);
             _SceneIndex = SceneManager.GetActiveScene().buildIndex;
         }
 
@@ -25,7 +30,16 @@ namespace SumoNS
         {
             _panels[Index].SetActive(true);
         }
+        
 
+       
+        public void Lose()
+        {
+            Time.timeScale = 0;
+            PanelOpen(2);
+        }
+
+     
         private void PanelClose(int Index)
         {
             _panels[Index].SetActive(false);
@@ -51,7 +65,16 @@ namespace SumoNS
                 case "exit":
                     Application.Quit();
                     break;
+                case "yes":
+                    SceneManager.LoadScene(_SceneIndex);
+                    Time.timeScale = 1;
+                    break;
+                case "no":
+                    Application.Quit();
+                    break;
             }
         }
+
+       
     }
 }

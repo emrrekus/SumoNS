@@ -13,7 +13,7 @@ namespace SumoNS.Uis
 
         private void Awake()
         {
-            _timeCounterText = GetComponent<TMP_Text>();
+            _timeCounterText = GetComponent<TMP_Text>();    
         }
 
         void Update() {

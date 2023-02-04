@@ -43,7 +43,10 @@ namespace SumoNS.Controllers
         public LayerMask platformLayer;
 
         private bool isGrounded;
+        private bool isDead;
 
+        
+        
         private void Awake()
         {
             _playerCamera = GetComponentInChildren<CinemachineVirtualCamera>();
@@ -85,6 +88,14 @@ namespace SumoNS.Controllers
                 _point.TakePoint(100);
                 transform.localScale += new Vector3(0.03f, 0.03f, 0.03f);
                 _playerRb.mass += 0.1f;
+            }
+            if (other.gameObject.CompareTag("Ground"))
+            {
+                isDead = true;
+                GameManagers.Instance.Lose();
+                
+               
+                
             }
         }
 

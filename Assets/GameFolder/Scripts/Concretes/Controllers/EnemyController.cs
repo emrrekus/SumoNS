@@ -31,6 +31,7 @@ namespace SumoNS.Controllers
         public LayerMask platformLayer;
 
         private bool isGrounded;
+        private bool isDead;
 
 
         private void Awake()
@@ -74,6 +75,8 @@ namespace SumoNS.Controllers
                 speed += 0.01f;
                 pushForce += 0.09f;
             }
+
+          
         }
 
 
