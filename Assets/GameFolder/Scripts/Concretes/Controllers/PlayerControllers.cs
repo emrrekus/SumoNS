@@ -8,6 +8,7 @@ using SumoNS.Abstracts.Points;
 using SumoNS.Animations;
 using SumoNS.Managers;
 using SumoNS.Movements;
+using TMPro;
 using UnityEngine;
 
 namespace SumoNS.Controllers
@@ -21,32 +22,35 @@ namespace SumoNS.Controllers
         [Header("Bounce Informations")] [SerializeField]
         public float pushForce = 0.5f;
 
-        private Touch _touch;
-        private Vector2 touchPosition;
-        private Quaternion rotationY;
-        private float rotateSpeedModifier = 0.3f;
+        public TMP_Text _pointText;
+        private Rigidbody _playerRb;
+      
         Vector3 direction;
         float maxSpeed = 2;
 
         private CharacterAnimation _animation;
         private CinemachineVirtualCamera _playerCamera;
 
-        private Rigidbody _playerRb;
-
+       
         private IPoint _point;
         private IMover _mover;
         private IRotation _rotation;
+        private Touch _touch;
+        private Vector2 touchPosition;
+        private Quaternion rotationY;
 
-        private int _scor;
+        
 
         public float characterRadius = 0.5f;
         public LayerMask platformLayer;
 
         private bool isGrounded;
         private bool isDead;
+        
+       
+        private float rotateSpeedModifier = 0.3f;
 
-        
-        
+
         private void Awake()
         {
             _playerCamera = GetComponentInChildren<CinemachineVirtualCamera>();
@@ -83,21 +87,25 @@ namespace SumoNS.Controllers
         {
             if (other.gameObject.CompareTag("Collectable"))
             {
+                _pointText.gameObject.SetActive(true);
+                Invoke("DeactivateText", 1f);
                 other.gameObject.SetActive(false);
                 CollectableManager.Instance.IsSpawn(true);
                 _point.TakePoint(100);
-                transform.localScale += new Vector3(0.03f, 0.03f, 0.03f);
-                _playerRb.mass += 0.1f;
+                transform.localScale += new Vector3(0.08f, 0.08f, 0.08f);
+                pushForce += 0.05f;
+                
             }
+
             if (other.gameObject.CompareTag("Ground"))
             {
                 isDead = true;
-                GameManager.Instance.Lose();
                 
-               
+                GameManager.Instance.Win();
                 
             }
         }
+
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -121,6 +129,11 @@ namespace SumoNS.Controllers
         private void ConstraintsCheck()
         {
             if (!isGrounded) _playerRb.constraints = RigidbodyConstraints.None;
+        }
+
+        private void DeactivateText()
+        {
+            _pointText.gameObject.SetActive(false);
         }
     }
 }

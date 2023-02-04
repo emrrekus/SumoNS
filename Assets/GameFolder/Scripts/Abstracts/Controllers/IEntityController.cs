@@ -7,6 +7,8 @@ namespace SumoNS.Abstracts.Controllers
     public interface IEntityController 
     {
       public Transform transform { get; }
+      
+       
        
     }
 }

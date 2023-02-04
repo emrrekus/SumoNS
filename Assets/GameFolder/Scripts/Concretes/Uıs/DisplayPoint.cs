@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using SumoNS.Controllers;
+using SumoNS.Managers;
 using SumoNS.Points;
 using TMPro;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace SumoNS.Uis
     {
         private TMP_Text _PointText;
         private GameObject _player;
+        private int count;
 
         private void Awake()
         {
@@ -24,6 +26,7 @@ namespace SumoNS.Uis
 
         private void OnEnable()
         {
+        
             Point point = GetComponentInParent<Point>();
             point.OnTakePoint += HandleTakePoint;
         }

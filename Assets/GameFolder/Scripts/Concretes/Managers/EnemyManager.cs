@@ -16,11 +16,13 @@ namespace SumoNS.Managers
 
         public List<EnemyController> Enemies => _enemies;
 
-        public int _enemyCount => _enemies.Count+1;
+        public int _enemyCount => _enemies.Count;
+        
       
 
         private void Awake()
         {
+            
             SingletonThisObject(this);
             _enemies = new List<EnemyController>();
             Targets = new List<Transform>();

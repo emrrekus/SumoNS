@@ -41,12 +41,14 @@ namespace SumoNS.Controllers
             _animation = new EnemyAnimation(this);
         }
 
-       
+        
 
 
         private void FixedUpdate()
         {
-            Debug.Log("EnemyCount:"+EnemyManager.Instance._enemyCount);
+            Debug.Log(EnemyManager.Instance._enemyCount);
+
+            
             IsGroundedControl();
             ConstraintsCheck();
 
