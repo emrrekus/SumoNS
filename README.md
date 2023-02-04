@@ -2,6 +2,7 @@ Merhaba,
 Sumo.İO örnek aldığım küçük sumo oyunum videosu ve görüntüleri aşağıdadır;
 
 Unity Oynanış Video: https://www.youtube.com/watch?v=VxTJqBxL_tg
+
 Unity Remote Oynanış video: https://www.youtube.com/watch?v=j0ZvRsFtCQI
 
 ![Game1](https://user-images.githubusercontent.com/112270755/216770447-69c2d101-2659-4589-928d-eff5a9927477.PNG)
