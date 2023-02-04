@@ -268,7 +268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
   speed: 5
-  pushForce: 10
+  pushForce: 15
   characterRadius: 0.5
   platformLayer:
     serializedVersion: 2
