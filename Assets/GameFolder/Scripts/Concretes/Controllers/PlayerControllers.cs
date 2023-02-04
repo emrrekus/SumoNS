@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using SumoNS.Abstracts.Controllers;
 using SumoNS.Abstracts.Movements;
 using SumoNS.Abstracts.Points;
@@ -11,12 +12,11 @@ using UnityEngine;
 
 namespace SumoNS.Controllers
 {
-    public class PlayerControllers : MonoBehaviour,IEntityController
+    public class PlayerControllers : MonoBehaviour, IEntityController
     {
         [Header("Movement Informations")] [SerializeField]
         float speed = 5;
 
-        
 
         [Header("Bounce Informations")] [SerializeField]
         public float pushForce = 0.5f;
@@ -29,6 +29,7 @@ namespace SumoNS.Controllers
         float maxSpeed = 2;
 
         private CharacterAnimation _animation;
+        private CinemachineVirtualCamera _playerCamera;
 
         private Rigidbody _playerRb;
 
@@ -45,6 +46,7 @@ namespace SumoNS.Controllers
 
         private void Awake()
         {
+            _playerCamera = GetComponentInChildren<CinemachineVirtualCamera>();
             isGrounded = true;
             _point = GetComponent<IPoint>();
             _playerRb = GetComponent<Rigidbody>();
@@ -56,6 +58,7 @@ namespace SumoNS.Controllers
 
         private void Update()
         {
+            if (!isGrounded) _playerCamera.enabled = false;
             direction = _playerRb.transform.forward;
         }
 
@@ -63,7 +66,7 @@ namespace SumoNS.Controllers
         {
             IsGroundedControl();
             ConstraintsCheck();
-            Debug.Log(isGrounded);
+
             _mover.MoveAction(speed, direction, maxSpeed);
             _rotation.MoveRotation(_touch, touchPosition, rotationY, rotateSpeedModifier);
         }
@@ -82,7 +85,6 @@ namespace SumoNS.Controllers
                 _point.TakePoint(100);
                 transform.localScale += new Vector3(0.03f, 0.03f, 0.03f);
                 _playerRb.mass += 0.1f;
-                
             }
         }
 
@@ -99,17 +101,6 @@ namespace SumoNS.Controllers
             }
         }
 
-        private void OnCollisionExit(Collision collision)
-        {
-            if (collision.gameObject.CompareTag("Platform"))
-            {
-                isGrounded = true;
-            }
-            else
-            {
-                isGrounded = false;
-            }
-        }
 
         private void IsGroundedControl()
         {

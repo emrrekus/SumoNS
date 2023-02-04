@@ -11,8 +11,7 @@ namespace SumoNS.Managers
     {
         
         [SerializeField] private List<EnemyController> _enemies;
-
-        
+       
         public List<Transform> Targets { get; private set; }
 
         public List<EnemyController> Enemies => _enemies;
@@ -30,7 +29,12 @@ namespace SumoNS.Managers
         public void AddEnemyController(EnemyController enemyController)
         {
             enemyController.transform.parent = this.transform;
+           
             _enemies.Add(enemyController);
+            for (int i = 0; i < _enemies.Count; i++)
+            {
+                _enemies[i].name = "Enemy" + (i + 1);
+            }
             
         }
         public void RemoveEnemyController(EnemyController enemyController)

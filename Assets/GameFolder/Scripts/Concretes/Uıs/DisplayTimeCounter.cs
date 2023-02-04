@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,28 +8,26 @@ namespace SumoNS.Uis
 {
     public class DisplayTimeCounter : MonoBehaviour
     {
-        public float timeLeft = 90.0f;
-        private TMP_Text  text;
+        private TMP_Text _timeCounterText;
+        public float timeLeft = 70.0f;
 
-        void Start() {
-            text.text = GetTimeString(timeLeft);
+        private void Awake()
+        {
+            _timeCounterText = GetComponent<TMP_Text>();
         }
 
         void Update() {
             timeLeft -= Time.deltaTime;
-            text.text = GetTimeString(timeLeft);
+
+            int minutes = Mathf.FloorToInt(timeLeft / 60f);
+            int seconds = Mathf.FloorToInt(timeLeft % 60f);
+
+            _timeCounterText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            
 
             if (timeLeft < 0) {
-                text.text = "00:00";
                 Debug.Log("Time is up!");
             }
         }
-
-        string GetTimeString(float time) {
-            int minutes = (int)time / 60;
-            int seconds = (int)time % 60;
-            return string.Format("{0:00}:{1:00}", minutes, seconds);
-        }
-        
     }
 }
