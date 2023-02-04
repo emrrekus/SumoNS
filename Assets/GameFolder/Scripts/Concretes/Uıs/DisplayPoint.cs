@@ -13,9 +13,11 @@ namespace SumoNS.Uis
     public class DisplayPoint : MonoBehaviour
     {
         private TMP_Text _PointText;
+        private GameObject _player;
 
         private void Awake()
         {
+           
             _PointText = GetComponent<TMP_Text>();
             
         }

@@ -9,11 +9,12 @@ namespace SumoNS
 {
     public class GameManagers : SingletonMBObject<GameManagers>
     {
-        [Header("UI Panel Informations")]
-        [SerializeField] GameObject[] _panels;
+        [Header("UI Panel Informations")] [SerializeField]
+        GameObject[] _panels;
 
 
         private int _SceneIndex;
+
         private void Awake()
         {
             _SceneIndex = SceneManager.GetActiveScene().buildIndex;
@@ -31,10 +32,8 @@ namespace SumoNS
         }
 
 
-
         public void UIButton(string process)
         {
-
             switch (process)
             {
                 case "Pause":
@@ -46,14 +45,13 @@ namespace SumoNS
                     Time.timeScale = 1;
                     break;
                 case "try":
-                
                     SceneManager.LoadScene(_SceneIndex);
                     Time.timeScale = 1;
                     break;
-                
+                case "exit":
+                    Application.Quit();
+                    break;
             }
-            
-            
         }
     }
 }
